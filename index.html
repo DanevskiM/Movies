@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+    <h1 class="app-title">🎬 Movie Tracker</h1>
+
+    <div class="tabs">
+      <button class="tab active" id="tab-watched" onclick="switchTab('watched')">
+        👁 Watched <span class="tab-count" id="count-watched"></span>
+      </button>
+      <button class="tab" id="tab-towatch" onclick="switchTab('towatch')">
+        🔖 To Watch <span class="tab-count" id="count-towatch"></span>
+      </button>
+    </div>
+
+    <div class="add-form">
+      <div class="form-grid">
+        <input type="text" id="inp-title" placeholder="Movie title" />
+        <select id="inp-genre">
+          <option value="">Genre</option>
+          <option>Action</option>
+          <option>Comedy</option>
+          <option>Drama</option>
+          <option>Horror</option>
+          <option>Sci-Fi</option>
+          <option>Romance</option>
+          <option>Thriller</option>
+          <option>Animation</option>
+          <option>Documentary</option>
+          <option>Other</option>
+        </select>
+        <input type="text" id="inp-actor" placeholder="Best actor" />
+        <input type="number" id="inp-year" placeholder="Year" min="1900" max="2099" />
+      </div>
+      <button class="add-btn" id="add-btn" onclick="addMovie()">
+        + Add to <span id="add-label">Watched</span>
+      </button>
+      <div class="status" id="status"></div>
+    </div>
+
+    <div id="list-watched" class="movie-list"></div>
+    <div id="list-towatch" class="movie-list hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
