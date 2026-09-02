@@ -1,20 +1,15 @@
-const SUPABASE_URL = 'https://cklbtjjnibkyhvpndmxu.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrbGJ0ampuaWJreWh2cG5kbXh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNjU2NTgsImV4cCI6MjA5NzY0MTY1OH0.D74n0JzOvPmZvvrkvm-eMaFBgYGkueyT2gounUvcJ1M';
-
-const API = `${SUPABASE_URL}/rest/v1/movies`;
+const API = '/api/movies';
 const HEADERS = {
   'Content-Type': 'application/json',
-  'apikey': SUPABASE_KEY,
-  'Authorization': `Bearer ${SUPABASE_KEY}`,
 };
 
 let activeTab = 'watched';
 let db = { watched: [], towatch: [] };
 
-/* ── Supabase helpers ── */
+/* ── Neon API helpers ── */
 
 async function fetchMovies() {
-  const res = await fetch(`${API}?order=created_at.asc`, { headers: HEADERS });
+  const res = await fetch(API, { headers: HEADERS });
   if (!res.ok) throw new Error('Failed to load');
   const rows = await res.json();
   db.watched = rows.filter(m => m.list === 'watched');
@@ -24,16 +19,15 @@ async function fetchMovies() {
 async function insertMovie(movie) {
   const res = await fetch(API, {
     method: 'POST',
-    headers: { ...HEADERS, 'Prefer': 'return=representation' },
+    headers: HEADERS,
     body: JSON.stringify(movie),
   });
   if (!res.ok) throw new Error('Failed to save');
-  const [row] = await res.json();
-  return row;
+  return res.json();
 }
 
 async function deleteMovie(id) {
-  const res = await fetch(`${API}?id=eq.${id}`, {
+  const res = await fetch(`${API}/${id}`, {
     method: 'DELETE',
     headers: HEADERS,
   });
